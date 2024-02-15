@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>-->
+<html lang="en">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title></title>
 </head>
 <body>
-<h1>Welcome to Index PAGE!</h1>
+
+<br>
+<br>
+<!--<div sec:authorize-->
+<a href="/admin">Home</a> | <a href="/admin/add">Add User</a> | <a href="/admin/update">Update User</a>
+| <a href="/admin/delete">Delete User</a> | <a href="/logout">Logout</a>
+<br>
+<br>
+<h2>User List</h2>
+<div>
+    <th:block th:each="user : ${users}">
+        <h4 th:text="${user.toString()}"></h4>
+    </th:block>
+</div>
+
 
 
 </body>
