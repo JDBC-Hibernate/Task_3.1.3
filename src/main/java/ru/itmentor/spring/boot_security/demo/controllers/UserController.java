@@ -1,12 +1,12 @@
 package ru.itmentor.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.itmentor.spring.boot_security.demo.service.UserServiceImpl;
-
-import java.security.Principal;
 
 @Controller
 public class UserController {
@@ -20,12 +20,15 @@ public class UserController {
 
     @GetMapping()
     public String userPage(
-            Model model,
-            Principal principal) {
-        System.out.println("User >>> " + principal.toString());
+            Model model) {
+        UserDetails loadedUser = (UserDetails) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        System.out.println("User >>> " + loadedUser.toString());
         model.addAttribute(
                 "user",
-                userService.getUserByUsername(principal.getName())
+                userService.getUserByUsername(loadedUser.getUsername())
         );
         return "user";
     }
