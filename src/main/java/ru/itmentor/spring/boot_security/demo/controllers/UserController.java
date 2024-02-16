@@ -6,9 +6,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.itmentor.spring.boot_security.demo.service.UserServiceImpl;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     private UserServiceImpl userService;
@@ -19,8 +21,7 @@ public class UserController {
     }
 
     @GetMapping()
-    public String userPage(
-            Model model) {
+    public String userPage(Model model) {
         UserDetails loadedUser = (UserDetails) SecurityContextHolder
                 .getContext()
                 .getAuthentication()

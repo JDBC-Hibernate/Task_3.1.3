@@ -38,8 +38,7 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private Integer enabled = 1;
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-    @Fetch(value = FetchMode.JOIN)
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name="users_roles",
         joinColumns = @JoinColumn(
                 name = "user_id",
