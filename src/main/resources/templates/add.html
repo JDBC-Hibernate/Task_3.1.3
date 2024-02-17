@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<br>
+<br>
+<a href="/admin">Home</a> | <a href="/logout">Logout</a>
+<br>
+<br>
+<h3>Add user from user list</h3>
+
+<div>
+    <form th:method="POST" th:action="@{/admin/add}" th:object="${user}">
+        <div>
+            <input type="text" th:field="*{username}" placeholder="Username" id="username" name="username"/>
+            <br>
+            <br>
+            <input type="text" th:field="*{password}" placeholder="Password" id="password" name="password"/>
+
+            <br>
+            <br>
+            <h4>Select roles of the user:</h4>
+            <p>
+                <input type="checkbox" id="user" name="roles" value="ROLE_USER" checked><label for="user"> User</label>
+                <br/>
+                <input type="checkbox" id="admin" name="roles" value="ROLE_ADMIN"><label for="admin"> Administrator</label>
+            </p>
+            <br>
+<!--            <th:block th:each="role: ${listRoles}">-->
+<!--                <input type="checkbox" th:field="*{roles}"-->
+<!--                       th:text="${role.name}" th:value="${role.id}" class="m-2" />-->
+<!--            </th:block> -->
+            <br>
+
+            <input type="submit"  value="Add User"/>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
