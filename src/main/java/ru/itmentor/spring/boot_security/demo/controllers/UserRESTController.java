@@ -1,6 +1,7 @@
 package ru.itmentor.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class UserRESTController {
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
         UserDetails authUser = (UserDetails) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
@@ -41,8 +42,7 @@ public class UserRESTController {
                     "Forbidden request"
             );
         }
-
-        return user;
+        return ResponseEntity.ok().body(user);
     }
 
 }

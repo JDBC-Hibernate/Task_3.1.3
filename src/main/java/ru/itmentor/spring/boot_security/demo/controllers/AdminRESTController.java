@@ -2,6 +2,7 @@ package ru.itmentor.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.itmentor.spring.boot_security.demo
         .exception_handlers.NoSuchUserException;
@@ -11,7 +12,7 @@ import ru.itmentor.spring.boot_security.demo.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/users")
+@RequestMapping("/api/admin")
 public class AdminRESTController {
 
     private final UserService userService;
@@ -21,21 +22,19 @@ public class AdminRESTController {
         this.userService = userService;
     }
 
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    @GetMapping()
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public User getUserById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id);
         if (user == null) {
             throw new NoSuchUserException(
                     "User with id = " + id + " not found!");
         }
-        return user;
+        return ResponseEntity.ok().body(user);
     }
 
     @PostMapping
@@ -46,7 +45,7 @@ public class AdminRESTController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public User deleteUser(@PathVariable Long id) {
         User user = userService.getUserById(id);
         if (user == null) {
