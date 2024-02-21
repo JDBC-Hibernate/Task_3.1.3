@@ -27,21 +27,13 @@ public class UserRESTController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        UserDetails authUser = (UserDetails) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
         User user = userService.getUserById(id);
         if (user == null) {
             throw new NoSuchUserException(
                     "User with id = " + id + " not found!"
             );
         }
-        if (!Objects.equals(authUser.getUsername(), user.getUsername())) {
-            throw new UnauthorizedUserException(
-                    "Forbidden request"
-            );
-        }
+
         return ResponseEntity.ok().body(user);
     }
 
